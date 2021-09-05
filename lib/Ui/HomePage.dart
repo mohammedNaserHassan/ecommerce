@@ -1,6 +1,8 @@
 import 'package:ecommerce/Data/ApiHelper.dart';
 import 'package:ecommerce/Models/ProductsResponse.dart';
+import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   const HomePage();
 
@@ -10,13 +12,12 @@ class HomePage extends StatelessWidget {
 appBar: AppBar(
   title: Text('Ecommerce'),
 ),
-      body: RaisedButton(
-        child: Text('Show single product'),
-        onPressed: ()async{
-          Product product = await ApiHelper.apiHelper.getSingleProduct('1');
-          print('h');
-          print(product.title);
-        },
+      body:Consumer<MyProvider>(
+        builder: (context,provider,c)=>RaisedButton(
+          onPressed: () async {
+            provider.getAllCategories();
+          },
+        ),
       ),
     );
   }
