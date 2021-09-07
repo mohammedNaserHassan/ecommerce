@@ -27,6 +27,7 @@ dependencies:
   sqflite:
   cached_network_image:
   provider:
+  carousel_slider:
 
 
   # The following adds the Cupertino Icons font to your application.
