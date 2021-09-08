@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/MyWidgets/FavouriteIcon.dart';
 import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Services/sqHelper.dart';
@@ -106,10 +107,7 @@ class ProductDetails extends StatelessWidget {
                           height: 50,
                           decoration: BoxDecoration(
                               color: Colors.white, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ),
+                          child: FavouriteIcon()
                         ),
                         GestureDetector(
                           onTap: () async {

@@ -1,6 +1,7 @@
 import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Ui/ProductDetails.dart';
+import 'package:ecommerce/Ui/ProfilePage.dart';
 import 'package:ecommerce/Ui/SplachScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ routes: {
   SplachScreen.routename: (context) => SplachScreen(),
   HomePage.routename: (context) => HomePage(),
   ProductDetails.routeName: (context) => ProductDetails(),
+  ProfilePage.routeName: (context) => ProfilePage(),
 },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

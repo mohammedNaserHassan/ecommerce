@@ -1,5 +1,6 @@
 import 'package:ecommerce/Data/ApiHelper.dart';
 import 'package:ecommerce/Models/ProductsResponse.dart';
+import 'package:ecommerce/MyWidgets/SliderSplach.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class MyProvider extends ChangeNotifier{
   List<ProductResponse> categoryProducts;
   ProductResponse selectedProduct;
 String selectedCategory='';
+//////////////////////////
 
   int selected = 0;
   TabController tabController;
@@ -17,7 +19,53 @@ String selectedCategory='';
     tabController.animateTo(selected);
     notifyListeners();
   }
+////////////////////////////////////////////////////////////////////////////////////
 
+  ////////////////////////////Favourite and cards////////////////
+
+  List<ProductResponse> favouriteProducts;
+  List<ProductResponse> cardsProducts;
+
+
+
+
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool isFavourite= false;
+  selectFavourite(){
+    this.isFavourite=!this.isFavourite;
+    notifyListeners();
+  }
+  /////////////
+  int currentPage = 0;
+  PageController controller = PageController();
+  onChanged(int index){
+    currentPage=index;
+    notifyListeners();
+  }
+
+  List<Widget> pages = [
+    SliderPage(
+        title: "Keep && Search",
+        description:
+        "Accept cryptocurrencies and digital assets, keep thern here, or send to orthers",
+        image: "Assets/Images/s1.svg"),
+    SliderPage(
+        title: "Browse",
+        description:
+        "Browse your Products cryptocurrencies or Change with orthres digital assets or flat money",
+        image: "Assets/Images/s3.svg"),
+    SliderPage(
+        title: "Buy",
+        description:
+        "Buy Products and cryptocurrencies with VISA and MasterVard right in the App",
+        image: "Assets/Images/s2.svg"),
+  ];
+  /////////////////////////
 
   getAllCategories() async {
     List<dynamic> categories = await ApiHelper.apiHelper.getAllCategories();
