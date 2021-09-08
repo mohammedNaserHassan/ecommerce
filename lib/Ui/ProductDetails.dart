@@ -1,17 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce/MyWidgets/FavouriteIcon.dart';
 import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
-import 'package:ecommerce/Services/sqHelper.dart';
 import 'package:ecommerce/Ui/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
-class ProductDetails extends StatelessWidget {
+class ProductDetails extends StatefulWidget {
   static final routeName = 'details';
 
   ProductDetails();
 
+  @override
+  _ProductDetailsState createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+  @override
+  void didChangeDependencies() {
+    Provider.of<MyProvider>(context,listen: false).isFavourite=false;
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,24 +116,40 @@ class ProductDetails extends StatelessWidget {
                           height: 50,
                           decoration: BoxDecoration(
                               color: Colors.white, shape: BoxShape.circle),
-                          child: FavouriteIcon()
+                          child: IconButton(
+                            icon: provider.isFavourite?Icon(Icons.favorite,color: Colors.red,):Icon(
+                              Icons.favorite_outline,
+                              color: Colors.red,
+                            ),
+                            onPressed: ()async{
+                              provider.selectFavourite();
+                              if(provider.isFavourite==true){
+                              await provider.addFavourite(provider.selectedProduct);}
+                            },
+                          ),
                         ),
-                        GestureDetector(
-                          onTap: () async {
+                        TextButton(
+                          onPressed: () async {
                             // await DbHelper.x.getTableNames();
+                            if(provider.cardsProducts.contains(provider.selectedProduct)){
+                              Toast.show(" your card is found", context,
+                                  duration: Toast.LENGTH_LONG, gravity:  Toast.LENGTH_SHORT);
+                            }else{
                            await provider.addCard(provider.selectedProduct);
+                           Toast.show("Added to your card successfully", context,
+                               duration: Toast.LENGTH_LONG, gravity:  Toast.LENGTH_SHORT);}
                           },
                           child: Container(
-                              margin: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(8),
                               alignment: Alignment.center,
                               padding: EdgeInsets.symmetric(
-                                vertical: 15,
+                                vertical: 10,
                               ),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25),
                                   color: Colors.amber),
-                              width: 300,
+                              width: 290,
                               child: Text(
                                 'Add To Cart',
                                 style: TextStyle(

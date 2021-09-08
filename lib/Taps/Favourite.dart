@@ -10,17 +10,19 @@ class FavouriteTap extends StatelessWidget {
     return Consumer<MyProvider>(
       builder: (context,provider,c)=>provider.favouriteProducts==null?Center(
         child: Text('No Favourite yet',style: TextStyle(color: Colors.white),),
-      ):SingleChildScrollView(
-        child: ListView.builder(
-          itemCount: provider.favouriteProducts.length,
-          itemBuilder: (context,index){
-            return CardFavourite(
-              title: provider.favouriteProducts[index].title,
-              imgurl: provider.favouriteProducts[index].image,
-              price: provider.favouriteProducts[index].price.toString(),
-            );
-          },
-        ),
+      ):ListView.builder(
+        itemCount: provider.favouriteProducts.length,
+        itemBuilder: (context,index){
+          return CardFavourite(
+            function: ()async{
+              await provider.deleteFavourite(provider.selectedProduct);
+              provider.isFavourite=false;
+            },
+            title: provider.favouriteProducts[index].title,
+            imgurl: provider.favouriteProducts[index].image,
+            price: provider.favouriteProducts[index].price.toString(),
+          );
+        },
       ),
     );
   }
