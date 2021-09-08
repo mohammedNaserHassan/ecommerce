@@ -17,7 +17,7 @@ class DbHelper {
   static final String priceteColumnName = 'price';
   static final String descriptionColumnName = 'description';
   static final String imageColumnName = 'image';
-  static final String ratingColumnName = 'rating';
+  static final String categoryColumnName = 'category';
 
   intiateDatabase() async {
     database = await getDatBaseConnection();
@@ -35,11 +35,11 @@ class DbHelper {
       db.execute(
           '''CREATE TABLE $tableName ($idColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
            $titleColumnName TEXT, $priceteColumnName  NUM, $descriptionColumnName TEXT,
-           $ratingColumnName TEXT,$imageColumnName TEXT)''');
+          $imageColumnName TEXT,$categoryColumnName TEXT)''');
 
       db.execute( '''CREATE TABLE $tableName2 ($idColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
            $titleColumnName TEXT, $priceteColumnName  NUM, $descriptionColumnName TEXT,
-           $ratingColumnName TEXT,$imageColumnName TEXT)''');
+           $imageColumnName TEXT,$categoryColumnName TEXT)''');
     }, onUpgrade: (db, old, newV) {
       db.execute(
           '''CREATE TABLE Test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, IsCOMPLETE  INTEGER, num REAL)''');
@@ -48,12 +48,12 @@ class DbHelper {
   }
 
   insertProductFavourite(ProductResponse productResponse) async {
-    int rownum = await database.insert(tableName, productResponse.toJson());
+    int rownum = await database.insert(tableName, productResponse.toJsonD());
     print(rownum);
   }
 
   insertProductCard(ProductResponse productResponse) async {
-    int rownum = await database.insert(tableName2, productResponse.toJson());
+    int rownum = await database.insert(tableName2, productResponse.toJsonD());
     print(rownum);
   }
 
@@ -61,7 +61,7 @@ class DbHelper {
   Future<List<ProductResponse>> getAllProductsFavourite() async {
     List<Map<String, Object>> results = await database.query(tableName);
     List<ProductResponse> productResponses =
-        results.map((e) => ProductResponse.fromJson(e)).toList();
+        results.map((e) => ProductResponse.fromJsonD(e)).toList();
     return productResponses;
   }
 
@@ -69,30 +69,30 @@ class DbHelper {
   Future<List<ProductResponse>> getAllProductsCard() async {
     List<Map<String, Object>> results = await database.query(tableName2);
     List<ProductResponse> productResponses =
-    results.map((e) => ProductResponse.fromJson(e)).toList();
+    results.map((e) => ProductResponse.fromJsonD(e)).toList();
     return productResponses;
   }
 
   Future<ProductResponse> getSpecificProductFavourite(int id) async {
     List<Map<String, dynamic>> results =
         await database.query(tableName, where: 'id=?', whereArgs: [id]);
-    ProductResponse productResponse = ProductResponse.fromJson(results.first);
+    ProductResponse productResponse = ProductResponse.fromJsonD(results.first);
     return productResponse;
   }
 
   Future<ProductResponse> getSpecificProductCard(int id) async {
     List<Map<String, dynamic>> results =
     await database.query(tableName2, where: 'id=?', whereArgs: [id]);
-    ProductResponse productResponse = ProductResponse.fromJson(results.first);
+    ProductResponse productResponse = ProductResponse.fromJsonD(results.first);
     return productResponse;
   }
 
-  deleteProductFavourite(int id) async {
-    database.delete(tableName, where: 'id=?', whereArgs: [id]);
+  deleteProductFavourite(ProductResponse productResponse) async {
+    database.delete(tableName, where: 'id=?', whereArgs: [productResponse.id]);
   }
 
-  deleteProductCard(int id) async {
-    database.delete(tableName2, where: 'id=?', whereArgs: [id]);
+  deleteProductCard(ProductResponse productResponse) async {
+    database.delete(tableName2, where: 'id=?', whereArgs: [productResponse.id]);
   }
 
 

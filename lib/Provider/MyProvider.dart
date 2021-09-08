@@ -1,6 +1,7 @@
 import 'package:ecommerce/Data/ApiHelper.dart';
 import 'package:ecommerce/Models/ProductsResponse.dart';
 import 'package:ecommerce/MyWidgets/SliderSplach.dart';
+import 'package:ecommerce/Services/sqHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,17 +22,45 @@ String selectedCategory='';
   }
 ////////////////////////////////////////////////////////////////////////////////////
 
-  ////////////////////////////Favourite and cards////////////////
+  ////////////////////////////Favourite////////////////
 
   List<ProductResponse> favouriteProducts;
+
+getAllFourite()async{
+  this.favouriteProducts= await DbHelper.x.getAllProductsFavourite();
+  notifyListeners();
+}
+
+addFavourite(ProductResponse productResponse)async{
+await DbHelper.x.insertProductFavourite(productResponse);
+getAllFourite();
+}
+
+deleteFavourite(ProductResponse productResponse)async{
+await DbHelper.x.deleteProductFavourite(productResponse);
+getAllFourite();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////Cards///////////////////////////////////
   List<ProductResponse> cardsProducts;
 
+  getAllCards()async{
+    this.cardsProducts= await DbHelper.x.getAllProductsCard();
+    notifyListeners();
+  }
 
+  addCard(ProductResponse productResponse)async{
+    await DbHelper.x.insertProductCard(productResponse);
+    getAllCards();
+  }
 
-
-
-
-
+  deleteCard(ProductResponse productResponse)async{
+    await DbHelper.x.deleteProductCard(productResponse);
+    getAllCards();
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -72,8 +72,8 @@ class _SplachScreenState extends State<SplachScreen> {
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.circular(35)),
                     child: (provider.currentPage == (provider.pages.length - 1))
-                        ? GestureDetector(
-                      onTap: (){
+                        ? TextButton(
+                      onPressed: (){
                         AppRouter.appRouter.gotoPagewithReplacment(HomePage.routename);
                       },
                           child: Text(

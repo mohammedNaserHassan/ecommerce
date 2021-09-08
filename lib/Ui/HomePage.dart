@@ -36,25 +36,27 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Consumer<MyProvider>(
       builder: (context, provider, index) => Scaffold(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.cyan,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Colors.cyan,
           title: Text(
-            'Shopping',
-            style: TextStyle(color: Colors.cyan),
+            'Shopping Store',
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.line_weight_sharp,
-              color: Colors.grey,
+          leading: Builder(
+            builder: (context)=>IconButton(
+              icon: Icon(
+                Icons.line_weight_sharp,
+                color: Colors.white,
+              ),
+              onPressed: () => Scaffold.of(context).openDrawer(),
             ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
           ),
           actions: [
-            GestureDetector(
-              onTap: (){
+            TextButton(
+              onPressed: (){
                 AppRouter.appRouter.gotoPagewithReplacment(ProfilePage.routeName);
               },
               child: Container(
@@ -62,9 +64,7 @@ class _HomePageState extends State<HomePage>
                 child: CircleAvatar(
                   radius: 15,
                   backgroundImage: NetworkImage(
-                      'https://media.istockphoto.com/photos/portrait-t'
-                      'eenager-picture-id846730696?b=1&k=20&m=846730696&s=170x170&h=CZ4DDXLVr7-cV19'
-                      'JbL8HM2GTZ8lJrMMFqOd7eFWzAyU='),
+                      'https://images.freeimages.com/images/small-previews/645/boy-1435680.jpg'),
                 ),
               ),
             )

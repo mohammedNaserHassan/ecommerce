@@ -15,10 +15,10 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.cyan,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.cyan,
         title: Row(
           children: [
             IconButton(
@@ -28,11 +28,11 @@ class ProductDetails extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.cyan,
+                  color: Colors.white,
                 )),
             Text(
               'Product Details',
-              style: TextStyle(color: Colors.cyan),
+              style: TextStyle(color: Colors.white),
             ),
           ],
         ),
@@ -111,7 +111,8 @@ class ProductDetails extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            await DbHelper.x.getTableNames();
+                            // await DbHelper.x.getTableNames();
+                           await provider.addCard(provider.selectedProduct);
                           },
                           child: Container(
                               margin: EdgeInsets.all(10),
@@ -120,9 +121,9 @@ class ProductDetails extends StatelessWidget {
                                 vertical: 15,
                               ),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.greenAccent),
+                                  border: Border.all(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Colors.cyan),
+                                  color: Colors.amber),
                               width: 300,
                               child: Text(
                                 'Add To Cart',

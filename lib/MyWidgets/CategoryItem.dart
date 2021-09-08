@@ -19,7 +19,7 @@ class CategoryItem extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               color:color,
-              borderRadius: BorderRadius.circular(15)
+              borderRadius: BorderRadius.circular(100)
             ),
             child: Center(child: Text(name,style: TextStyle(
               fontSize: 22,
