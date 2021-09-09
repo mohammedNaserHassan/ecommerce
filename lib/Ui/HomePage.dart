@@ -41,14 +41,14 @@ class _HomePageState extends State<HomePage>
           elevation: 0,
           backgroundColor: Colors.cyan,
           title: Text(
-            'Shopping Store',
+            provider.scafoodName,
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           leading: Builder(
             builder: (context)=>IconButton(
               icon: Icon(
-                Icons.line_weight_sharp,
+                Icons.menu_rounded,
                 color: Colors.white,
               ),
               onPressed: () => Scaffold.of(context).openDrawer(),

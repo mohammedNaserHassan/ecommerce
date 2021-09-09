@@ -16,11 +16,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  @override
-  void didChangeDependencies() {
-    Provider.of<MyProvider>(context,listen: false).isFavourite=false;
-    super.didChangeDependencies();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,27 +113,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                           decoration: BoxDecoration(
                               color: Colors.white, shape: BoxShape.circle),
                           child: IconButton(
-                            icon: provider.isFavourite?Icon(Icons.favorite,color: Colors.red,):Icon(
-                              Icons.favorite_outline,
-                              color: Colors.red,
-                            ),
-                            onPressed: ()async{
-                              provider.selectFavourite();
-                              if(provider.isFavourite==true){
-                              await provider.addFavourite(provider.selectedProduct);}
-                            },
+                            icon: provider.favouriteProducts.any((element) =>
+                                    element.id == provider.selectedProduct.id&&provider.favouriteProducts!=null)
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.red,
+                                  ),
+                            onPressed: () async {
+                                    provider.addFavourite(provider.selectedProduct);
+                              }
                           ),
                         ),
                         TextButton(
                           onPressed: () async {
                             // await DbHelper.x.getTableNames();
-                            if(provider.cardsProducts.contains(provider.selectedProduct)){
-                              Toast.show(" your card is found", context,
-                                  duration: Toast.LENGTH_LONG, gravity:  Toast.LENGTH_SHORT);
-                            }else{
-                           await provider.addCard(provider.selectedProduct);
-                           Toast.show("Added to your card successfully", context,
-                               duration: Toast.LENGTH_LONG, gravity:  Toast.LENGTH_SHORT);}
+                            await provider.addCard(provider.selectedProduct);
+                            Toast.show(
+                                "Added to your card successfully", context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.LENGTH_SHORT);
                           },
                           child: Container(
                               margin: EdgeInsets.all(8),

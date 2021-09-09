@@ -13,7 +13,7 @@ class CardofCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyProvider>(
       builder: (context, provider, index) => Card(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(10),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
@@ -28,8 +28,8 @@ class CardofCards extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    'Title:\t' + title,
-                    style: TextStyle(fontSize: 8),
+                    'QNT:\t' + title,
+                    style: TextStyle(fontSize: 10),
                   ),
                   Container(
                       margin: EdgeInsets.only(top: 10),

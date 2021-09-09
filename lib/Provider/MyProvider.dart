@@ -5,75 +5,88 @@ import 'package:ecommerce/Services/sqHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MyProvider extends ChangeNotifier{
+class MyProvider extends ChangeNotifier {
   List<String> allCategories;
   List<ProductResponse> allProducts;
   List<ProductResponse> categoryProducts;
   ProductResponse selectedProduct;
-String selectedCategory='';
+  String selectedCategory = '';
+
 //////////////////////////
 
   int selected = 0;
   TabController tabController;
+  String scafoodName = 'Shopping Store';
   setSelected(int selected) {
     this.selected = selected;
     tabController.animateTo(selected);
+    if (selected == 0) {
+      this.scafoodName = 'Shopping Store';
+    } else if (selected == 1) {
+      this.scafoodName = 'My Favourite';
+    } else if (selected == 2) {
+      this.scafoodName = 'My Cards';
+    }
     notifyListeners();
   }
+
 ////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////Favourite////////////////
 
   List<ProductResponse> favouriteProducts;
 
-getAllFourite()async{
-  this.favouriteProducts= await DbHelper.x.getAllProductsFavourite();
-  notifyListeners();
-}
+  getAllFourite() async {
+    this.favouriteProducts = await DbHelper.x.getAllProductsFavourite();
+    notifyListeners();
+  }
 
-addFavourite(ProductResponse productResponse)async{
-await DbHelper.x.insertProductFavourite(productResponse);
-getAllFourite();
-}
+  addFavourite(ProductResponse productResponse) async {
+    bool productInfavourite =
+        favouriteProducts.any((element) => element.id == productResponse.id);
+    if (productInfavourite) {
+      await DbHelper.x.deleteProductFavourite(productResponse);
+    } else {
+      await DbHelper.x.insertProductFavourite(productResponse);
+      getAllFourite();
+    }
+  }
 
-deleteFavourite(ProductResponse productResponse)async{
-await DbHelper.x.deleteProductFavourite(productResponse);
-getAllFourite();
-}
+  deleteFavourite(ProductResponse productResponse) async {
+    await DbHelper.x.deleteProductFavourite(productResponse);
+    getAllFourite();
+  }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-///////////////////////////////////Cards///////////////////////////////////
-  List<ProductResponse> cardsProducts;
 
-  getAllCards()async{
-    this.cardsProducts= await DbHelper.x.getAllProductsCard();
+///////////////////////////////////Cards///////////////////////////////////
+  List<ProductResponse> cardsProducts = [];
+
+  getAllCards() async {
+    this.cardsProducts = await DbHelper.x.getAllProductsCard();
     notifyListeners();
   }
 
-  addCard(ProductResponse productResponse)async{
+  addCard(ProductResponse productResponse) async {
     await DbHelper.x.insertProductCard(productResponse);
     getAllCards();
   }
 
-  deleteCard(ProductResponse productResponse)async{
+  deleteCard(ProductResponse productResponse) async {
     await DbHelper.x.deleteProductCard(productResponse);
     getAllCards();
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool isFavourite= false;
-  selectFavourite(){
-    this.isFavourite=!this.isFavourite;
-    notifyListeners();
-  }
   /////////////
   int currentPage = 0;
   PageController controller = PageController();
-  onChanged(int index){
-    currentPage=index;
+
+  onChanged(int index) {
+    currentPage = index;
     notifyListeners();
   }
 
@@ -81,19 +94,20 @@ bool isFavourite= false;
     SliderPage(
         title: "Keep && Search",
         description:
-        "Accept cryptocurrencies and digital assets, keep thern here, or send to orthers",
+            "Accept cryptocurrencies and digital assets, keep thern here, or send to orthers",
         image: "Assets/Images/s1.svg"),
     SliderPage(
         title: "Browse",
         description:
-        "Browse your Products cryptocurrencies or Change with orthres digital assets or flat money",
+            "Browse your Products cryptocurrencies or Change with orthres digital assets or flat money",
         image: "Assets/Images/s3.svg"),
     SliderPage(
         title: "Buy",
         description:
-        "Buy Products and cryptocurrencies with VISA and MasterVard right in the App",
+            "Buy Products and cryptocurrencies with VISA and MasterVard right in the App",
         image: "Assets/Images/s2.svg"),
   ];
+
   /////////////////////////
 
   getAllCategories() async {
@@ -104,9 +118,9 @@ bool isFavourite= false;
   }
 
   getCategoryProducts(String category) async {
-    this.selectedCategory=category;
+    this.selectedCategory = category;
     List<dynamic> products =
-    await ApiHelper.apiHelper.getCategoryProducts(category);
+        await ApiHelper.apiHelper.getCategoryProducts(category);
     categoryProducts =
         products.map((e) => ProductResponse.fromJson(e)).toList();
     notifyListeners();
@@ -116,7 +130,6 @@ bool isFavourite= false;
     List<dynamic> products = await ApiHelper.apiHelper.getAllProducts();
     allProducts = products.map((e) => ProductResponse.fromJson(e)).toList();
     notifyListeners();
-
   }
 
   getSpecificProduct(int id) async {

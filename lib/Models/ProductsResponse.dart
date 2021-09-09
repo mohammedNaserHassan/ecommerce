@@ -6,6 +6,7 @@ class ProductResponse {
   String category;
   String image;
   Rating rating;
+  num Quntity;
 
   ProductResponse(
       {this.id,
@@ -14,7 +15,9 @@ class ProductResponse {
         this.description,
         this.category,
         this.image,
-        this.rating});
+        this.rating,
+      this.Quntity
+      });
 
   ProductResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -34,6 +37,7 @@ class ProductResponse {
     description = json['description'];
     category = json['category'];
     image = json['image'];
+    Quntity = json['Quntity'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +62,7 @@ class ProductResponse {
     data['description'] = this.description;
     data['category'] = this.category;
     data['image'] = this.image;
+    data['Quntity'] = 1;
     return data;
   }
 

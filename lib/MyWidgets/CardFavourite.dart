@@ -12,7 +12,7 @@ class CardFavourite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyProvider>(
       builder: (context,provider,index)=>Card(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(10),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
@@ -27,7 +27,7 @@ class CardFavourite extends StatelessWidget {
                   child: CachedNetworkImage(imageUrl:  imgurl)),
               Column(
                 children: [
-                  Text('Title:\t'+title,style: TextStyle(fontSize: 5),),
+                  Text('Title:\t'+title,style: TextStyle(fontSize: 2),),
                   Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Row(

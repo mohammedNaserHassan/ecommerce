@@ -18,6 +18,7 @@ class DbHelper {
   static final String descriptionColumnName = 'description';
   static final String imageColumnName = 'image';
   static final String categoryColumnName = 'category';
+  static final String quntityColumnName = 'Quntity';
 
   intiateDatabase() async {
     database = await getDatBaseConnection();
@@ -33,13 +34,13 @@ class DbHelper {
     }, onCreate: (db, v) {
       print('the data base is created');
       db.execute(
-          '''CREATE TABLE $tableName ($idColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
+          '''CREATE TABLE $tableName ($idColumnName INTEGER PRIMARY KEY,
            $titleColumnName TEXT, $priceteColumnName  NUM, $descriptionColumnName TEXT,
-          $imageColumnName TEXT,$categoryColumnName TEXT)''');
+          $imageColumnName TEXT,$categoryColumnName TEXT,$quntityColumnName NUM)''');
 
-      db.execute( '''CREATE TABLE $tableName2 ($idColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
+      db.execute( '''CREATE TABLE $tableName2 ($idColumnName INTEGER PRIMARY KEY,
            $titleColumnName TEXT, $priceteColumnName  NUM, $descriptionColumnName TEXT,
-           $imageColumnName TEXT,$categoryColumnName TEXT)''');
+           $imageColumnName TEXT,$categoryColumnName TEXT,$quntityColumnName NUM)''');
     }, onUpgrade: (db, old, newV) {
       db.execute(
           '''CREATE TABLE Test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, IsCOMPLETE  INTEGER, num REAL)''');
