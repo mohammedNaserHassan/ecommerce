@@ -19,7 +19,7 @@ class CardFavourite extends StatelessWidget {
               border: Border.all(color: Colors.red.withOpacity(0.3))
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                   width: 100,
@@ -27,13 +27,14 @@ class CardFavourite extends StatelessWidget {
                   child: CachedNetworkImage(imageUrl:  imgurl)),
               Column(
                 children: [
-                  Text('Title:\t'+title,style: TextStyle(fontSize: 2),),
+                  Container(
+                      margin: EdgeInsets.only(right: 50),
+                      child: Text(title,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
                   Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('Price:'+price,style: TextStyle(fontSize: 17,color: Colors.red),),
+                          Text(price+'\$',style: TextStyle(fontSize: 17,color: Colors.red),),
                           SizedBox(width: 110,),
                           IconButton(
                             icon: Icon(Icons.favorite,color: Colors.red,),

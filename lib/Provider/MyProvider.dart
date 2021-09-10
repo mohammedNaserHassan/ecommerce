@@ -34,7 +34,7 @@ class MyProvider extends ChangeNotifier {
 
   ////////////////////////////Favourite////////////////
 
-  List<ProductResponse> favouriteProducts;
+  List<ProductResponse> favouriteProducts=[];
 
   getAllFourite() async {
     this.favouriteProducts = await DbHelper.x.getAllProductsFavourite();
@@ -58,7 +58,16 @@ class MyProvider extends ChangeNotifier {
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+int QUT=0;
+  setQuntity(num price,num quntity){
+    QUT=QUT+(quntity*price);
+    notifyListeners();
+  }
+  desetQuntity(num price,num quntity){
+    if(QUT>0){
+    QUT = QUT-(quntity*price);}
+    notifyListeners();
+  }
 
 
 ///////////////////////////////////Cards///////////////////////////////////
@@ -70,12 +79,28 @@ class MyProvider extends ChangeNotifier {
   }
 
   addCard(ProductResponse productResponse) async {
-    await DbHelper.x.insertProductCard(productResponse);
+    bool productInCart = cardsProducts.any((x) {
+      return x.id == productResponse.id;
+    });
+    if (productInCart) {
+      productResponse.Quntity = cardsProducts
+          .where((element) => element.id == productResponse.id)
+          .first
+          .Quntity;
+      await DbHelper.x.updateProductQuantity(productResponse);
+    } else {
+      await DbHelper.x.insertProductCard(productResponse);
+    }
     getAllCards();
   }
 
   deleteCard(ProductResponse productResponse) async {
     await DbHelper.x.deleteProductCard(productResponse);
+    getAllCards();
+  }
+
+  updateProductInCart(ProductResponse productResponse) async {
+    await DbHelper.x.updateProductQuantity(productResponse);
     getAllCards();
   }
 

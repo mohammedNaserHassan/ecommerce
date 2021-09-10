@@ -27,18 +27,23 @@ class CardofCards extends StatelessWidget {
                   child: CachedNetworkImage(imageUrl: imgurl)),
               Column(
                 children: [
-                  Text(
-                    'QNT:\t' + title,
-                    style: TextStyle(fontSize: 10),
+                  Container(
+                    margin: EdgeInsets.only(right:150,top: 15),
+                    child: Text(
+                      'QNT:\t' + title,
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                   Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            'Price:' + price,
-                            style: TextStyle(fontSize: 17, color: Colors.red),
+                          Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Text(
+                              'Price:' + price,
+                              style: TextStyle(fontSize: 17, color: Colors.red),
+                            ),
                           ),
                           SizedBox(
                             width: 110,

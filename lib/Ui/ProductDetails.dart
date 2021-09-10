@@ -114,7 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               color: Colors.white, shape: BoxShape.circle),
                           child: IconButton(
                             icon: provider.favouriteProducts.any((element) =>
-                                    element.id == provider.selectedProduct.id&&provider.favouriteProducts!=null)
+                                    element.id == provider.selectedProduct.id||provider.favouriteProducts.length==0)
                                 ? Icon(
                                     Icons.favorite,
                                     color: Colors.red,
@@ -132,6 +132,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           onPressed: () async {
                             // await DbHelper.x.getTableNames();
                             await provider.addCard(provider.selectedProduct);
+                            provider.setQuntity(provider.selectedProduct.price,provider.selectedProduct.Quntity);
                             Toast.show(
                                 "Added to your card successfully", context,
                                 duration: Toast.LENGTH_LONG,

@@ -96,6 +96,15 @@ class DbHelper {
     database.delete(tableName2, where: 'id=?', whereArgs: [productResponse.id]);
   }
 
+  updateProductQuantity(ProductResponse productResponse) async {
+    // productResponse.quantity = productResponse.quantity++;
+
+    productResponse.Quntity = ++productResponse.Quntity;
+
+    database.update(tableName2, productResponse.toJsonD(),
+        where: 'id=?', whereArgs: [productResponse.id]);
+  }
+
 
   Future<List<dynamic>> getTableNames() async {
     List<Map<String, Object>> tables = await database

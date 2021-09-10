@@ -13,8 +13,12 @@ class CategoryTap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyProvider>(
       builder: (context, provider, v) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        mainAxisAlignment:  provider.allProducts==null?MainAxisAlignment.center:MainAxisAlignment.start,
+        crossAxisAlignment: provider.allProducts==null?CrossAxisAlignment.center:CrossAxisAlignment.start,
+        children: provider.allProducts==null?[
+        Text('Please Check your internet',style: TextStyle(fontSize: 20,),),
+          Icon(Icons.wifi_off)
+        ]:[
           Container(
             margin: EdgeInsets.all(20),
             width: 350,

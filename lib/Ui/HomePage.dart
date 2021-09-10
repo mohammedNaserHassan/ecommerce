@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/MyWidgets/CategoryItem.dart';
 import 'package:ecommerce/Provider/MyProvider.dart';
+import 'package:ecommerce/Services/Dialog.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Taps/Cards.dart';
 import 'package:ecommerce/Taps/Category.dart';
@@ -118,26 +121,51 @@ class _HomePageState extends State<HomePage>
               Text('Welcome To Our Store'),
               SizedBox(height: 20,),
               ListTile(
+                onTap: (){
+                  AppRouter.appRouter.gotoPagewithReplacment(ProfilePage.routeName);
+                },
                 title: Text('Profile'),
                 leading: Icon(Icons.person),
               ),
               ListTile(
+                onTap: (){
+                  provider.tabController.animateTo(0, duration: Duration(seconds: 0));
+                  AppRouter.appRouter.back();
+                },
                 title: Text('Categories'),
                 leading: Icon(Icons.category),
               ),
               ListTile(
+                onTap: (){
+                  provider.tabController.animateTo(1, duration: Duration(seconds: 1));
+                  AppRouter.appRouter.back();
+                },
                 title: Text('My Favourite'),
                 leading: Icon(Icons.favorite),
               ),
               ListTile(
+                onTap: (){
+                  provider.tabController.animateTo(2, duration: Duration(seconds: 2));
+                  AppRouter.appRouter.back();
+                },
                 title: Text('My Card'),
                 leading: Icon(Icons.local_grocery_store),
               ),
               ListTile(
+                onTap: (){
+                  AppRouter.appRouter.back();
+                  showDialog(context: context,
+                      builder: (BuildContext context) {
+                        return Alert();
+                      });
+                },
                 title: Text('About'),
                 leading: Icon(Icons.more),
               ),
               ListTile(
+                onTap: (){
+                  exit(0);
+                },
                 title: Text('Logout'),
                 leading: Icon(Icons.logout),
               )

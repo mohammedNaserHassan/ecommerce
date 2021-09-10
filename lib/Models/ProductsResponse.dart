@@ -62,7 +62,7 @@ class ProductResponse {
     data['description'] = this.description;
     data['category'] = this.category;
     data['image'] = this.image;
-    data['Quntity'] = 1;
+    data['Quntity'] = this.Quntity??1;
     return data;
   }
 
