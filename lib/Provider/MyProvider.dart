@@ -1,7 +1,7 @@
-import 'package:ecommerce/Data/ApiHelper.dart';
+import 'package:ecommerce/API/ApiHelper.dart';
 import 'package:ecommerce/Models/ProductsResponse.dart';
 import 'package:ecommerce/MyWidgets/SliderSplach.dart';
-import 'package:ecommerce/Services/sqHelper.dart';
+import 'package:ecommerce/Authintication/Helper/sqHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -58,9 +58,12 @@ class MyProvider extends ChangeNotifier {
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-int QUT=0;
-  setQuntity(num price,num quntity){
-    QUT=QUT+(quntity*price);
+
+  int containerPrice=0;
+
+  int QUT=0;
+  setQuntity(num quntity){
+    QUT=QUT+quntity;
     notifyListeners();
   }
   desetQuntity(num price,num quntity){
@@ -68,7 +71,9 @@ int QUT=0;
     QUT = QUT-(quntity*price);}
     notifyListeners();
   }
-
+ProductResponse getSelected(){
+ return this.selectedProduct;
+}
 
 ///////////////////////////////////Cards///////////////////////////////////
   List<ProductResponse> cardsProducts = [];
@@ -95,7 +100,15 @@ int QUT=0;
   }
 
   deleteCard(ProductResponse productResponse) async {
-    await DbHelper.x.deleteProductCard(productResponse);
+   int quntity =  productResponse.Quntity;
+   if(quntity>1){
+     productResponse.Quntity = cardsProducts
+         .where((element) => element.id == productResponse.id)
+         .first
+         .Quntity;
+     await DbHelper.x.decrementProductQuantity(productResponse);
+   }else{
+    await DbHelper.x.deleteProductCard(productResponse);}
     getAllCards();
   }
 

@@ -37,7 +37,7 @@ class CategoryTap extends StatelessWidget {
           ),
           Container(
               margin: EdgeInsets.only(left: 20),
-              child: Text('Highights',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+              child: Text('HighLights',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10),
             color: Colors.black54.withOpacity(0.1),

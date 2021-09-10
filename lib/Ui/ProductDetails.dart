@@ -16,7 +16,11 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-
+@override
+  void initState() {
+  Provider.of<MyProvider>(context,listen: false).getSelected();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,11 +136,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           onPressed: () async {
                             // await DbHelper.x.getTableNames();
                             await provider.addCard(provider.selectedProduct);
-                            provider.setQuntity(provider.selectedProduct.price,provider.selectedProduct.Quntity);
                             Toast.show(
                                 "Added to your card successfully", context,
                                 duration: Toast.LENGTH_LONG,
-                                gravity: Toast.LENGTH_SHORT);
+                                gravity: Toast.BOTTOM);
+                            provider.setQuntity(provider.selectedProduct.price);
                           },
                           child: Container(
                               margin: EdgeInsets.all(8),

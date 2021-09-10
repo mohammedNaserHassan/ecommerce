@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 class CardofCards extends StatelessWidget {
   String title, price, imgurl;
   Function function;
+  int priceContainer;
 
-  CardofCards({this.title, this.price, this.imgurl,this.function});
+  CardofCards({this.title, this.price, this.imgurl,this.function,this.priceContainer});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class CardofCards extends StatelessWidget {
                       child: Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 20),
+                            margin: EdgeInsets.only(left: 10),
                             child: Text(
                               'Price:' + price,
                               style: TextStyle(fontSize: 17, color: Colors.red),

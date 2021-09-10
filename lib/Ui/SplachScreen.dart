@@ -1,3 +1,4 @@
+import 'package:ecommerce/Provider/AuthProvider.dart';
 import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Ui/HomePage.dart';
@@ -25,8 +26,8 @@ class _SplachScreenState extends State<SplachScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<MyProvider>(
-        builder:(context,provider,x)=> Stack(
+      body: Consumer2<MyProvider,AuthProvider>(
+        builder:(context,provider,provider2,x)=> Stack(
           children: <Widget>[
             PageView.builder(
               scrollDirection: Axis.horizontal,
@@ -74,7 +75,7 @@ class _SplachScreenState extends State<SplachScreen> {
                     child: (provider.currentPage == (provider.pages.length - 1))
                         ? TextButton(
                       onPressed: (){
-                        AppRouter.appRouter.gotoPagewithReplacment(HomePage.routename);
+                        provider2.checkLogin();
                       },
                           child: Text(
                       "Get Started",

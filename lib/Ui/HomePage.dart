@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerce/MyWidgets/CategoryItem.dart';
+import 'package:ecommerce/Provider/AuthProvider.dart';
 import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Dialog.dart';
 import 'package:ecommerce/Services/Router.dart';
@@ -32,6 +28,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     Provider.of<MyProvider>(context, listen: false).tabController =
         TabController(length: 3, vsync: this);
+    Provider.of<AuthProvider>(context, listen: false).getUserFromFirestore();
     super.initState();
   }
 
@@ -62,12 +59,13 @@ class _HomePageState extends State<HomePage>
               onPressed: (){
                 AppRouter.appRouter.gotoPagewithReplacment(ProfilePage.routeName);
               },
-              child: Container(
-                margin: EdgeInsets.only(right: 15),
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundImage: NetworkImage(
-                      'https://images.freeimages.com/images/small-previews/645/boy-1435680.jpg'),
+              child: Consumer<AuthProvider>(
+                builder: (context,provider,v)=>Container(
+                  margin: EdgeInsets.only(right: 15),
+                  child: CircleAvatar(
+                    backgroundImage:
+                    NetworkImage(provider.user.imgurl),
+                  ),
                 ),
               ),
             )
@@ -108,15 +106,20 @@ class _HomePageState extends State<HomePage>
         drawer: Drawer(
           child: Column(
             children: [
-              UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey
-                ),
-                otherAccountsPictures: [
-                  Icon(Icons.person)
-                ],
-                  accountName: Text('Mohammed'),
-                  accountEmail: Text('Shoakk2015@gmail.com')),
+              Consumer<AuthProvider>(
+                builder: (context,provider,v)=> UserAccountsDrawerHeader(
+                  currentAccountPicture: CircleAvatar(
+          radius: 100,
+          backgroundImage:
+          NetworkImage(provider.user.imgurl),
+        ),
+
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey
+                  ),
+                    accountName: Text(provider.user.fName+'\t\t'+provider.user.lName),
+                    accountEmail: Text(provider.user.Email)),
+              ),
               SizedBox(height: 20,),
               Text('Welcome To Our Store'),
               SizedBox(height: 20,),
@@ -159,15 +162,17 @@ class _HomePageState extends State<HomePage>
                         return Alert();
                       });
                 },
-                title: Text('About'),
+                title: Text('About us'),
                 leading: Icon(Icons.more),
               ),
-              ListTile(
-                onTap: (){
-                  exit(0);
-                },
-                title: Text('Logout'),
-                leading: Icon(Icons.logout),
+              Consumer<AuthProvider>(
+                builder: (context,provider,v)=>ListTile(
+                  onTap: (){
+                 provider.logOut();
+                  },
+                  title: Text('Logout'),
+                  leading: Icon(Icons.logout),
+                ),
               )
             ],
           ),
