@@ -17,6 +17,7 @@ class MyProvider extends ChangeNotifier {
   int selected = 0;
   TabController tabController;
   String scafoodName = 'Shopping Store';
+
   setSelected(int selected) {
     this.selected = selected;
     tabController.animateTo(selected);
@@ -34,7 +35,7 @@ class MyProvider extends ChangeNotifier {
 
   ////////////////////////////Favourite////////////////
 
-  List<ProductResponse> favouriteProducts=[];
+  List<ProductResponse> favouriteProducts = [];
 
   getAllFourite() async {
     this.favouriteProducts = await DbHelper.x.getAllProductsFavourite();
@@ -59,21 +60,21 @@ class MyProvider extends ChangeNotifier {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  int containerPrice=0;
+  double QUT = 0;
 
-  int QUT=0;
-  setQuntity(num quntity){
-    QUT=QUT+quntity;
+  setQuntity(double quntity) {
+    QUT += quntity.toDouble();
     notifyListeners();
   }
-  desetQuntity(num price,num quntity){
-    if(QUT>0){
-    QUT = QUT-(quntity*price);}
+
+  desetQuntity(double price) {
+      QUT -=price.toDouble();
     notifyListeners();
   }
-ProductResponse getSelected(){
- return this.selectedProduct;
-}
+
+  ProductResponse getSelected() {
+    return this.selectedProduct;
+  }
 
 ///////////////////////////////////Cards///////////////////////////////////
   List<ProductResponse> cardsProducts = [];
@@ -100,15 +101,16 @@ ProductResponse getSelected(){
   }
 
   deleteCard(ProductResponse productResponse) async {
-   int quntity =  productResponse.Quntity;
-   if(quntity>1){
-     productResponse.Quntity = cardsProducts
-         .where((element) => element.id == productResponse.id)
-         .first
-         .Quntity;
-     await DbHelper.x.decrementProductQuantity(productResponse);
-   }else{
-    await DbHelper.x.deleteProductCard(productResponse);}
+    int quntity = productResponse.Quntity;
+    if (quntity > 1) {
+      productResponse.Quntity = cardsProducts
+          .where((element) => element.id == productResponse.id)
+          .first
+          .Quntity;
+      await DbHelper.x.decrementProductQuantity(productResponse);
+    } else {
+      await DbHelper.x.deleteProductCard(productResponse);
+    }
     getAllCards();
   }
 
@@ -118,7 +120,6 @@ ProductResponse getSelected(){
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   /////////////
   int currentPage = 0;
   PageController controller = PageController();
@@ -151,6 +152,7 @@ ProductResponse getSelected(){
   getAllCategories() async {
     List<dynamic> categories = await ApiHelper.apiHelper.getAllCategories();
     allCategories = categories.map((e) => e.toString()).toList();
+    print(allCategories);
     notifyListeners();
     getCategoryProducts(allCategories.first);
   }

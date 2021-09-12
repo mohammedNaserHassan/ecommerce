@@ -10,14 +10,13 @@ class ProductResponse {
 
   ProductResponse(
       {this.id,
-        this.title,
-        this.price,
-        this.description,
-        this.category,
-        this.image,
-        this.rating,
-      this.Quntity
-      });
+      this.title,
+      this.price,
+      this.description,
+      this.category,
+      this.image,
+      this.rating,
+      this.Quntity});
 
   ProductResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,7 +26,7 @@ class ProductResponse {
     category = json['category'];
     image = json['image'];
     rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+        json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
 
   ProductResponse.fromJsonD(Map<String, dynamic> json) {
@@ -62,11 +61,9 @@ class ProductResponse {
     data['description'] = this.description;
     data['category'] = this.category;
     data['image'] = this.image;
-    data['Quntity'] = this.Quntity??1;
+    data['Quntity'] = this.Quntity ?? 1;
     return data;
   }
-
-
 }
 
 class Rating {

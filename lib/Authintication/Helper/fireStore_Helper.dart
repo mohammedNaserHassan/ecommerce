@@ -29,8 +29,6 @@ class fireStore_Helper {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
-
   Future<List<CountryModel>> getAllCountreis() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -40,10 +38,10 @@ class fireStore_Helper {
       }).toList();
       return countries;
     } on Exception catch (e) {
+      print(e);
       // TODO
     }
   }
-
 
   updateProfile(RegisterRequest userModel) async {
     await firebaseFirestore

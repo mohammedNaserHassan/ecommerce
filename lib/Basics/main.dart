@@ -3,18 +3,19 @@ import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Ui/ProductDetails.dart';
 import 'package:ecommerce/Ui/ProfilePage.dart';
 import 'package:ecommerce/Ui/SplachScreen.dart';
+import 'package:ecommerce/Ui/UpdateProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'AppFire.dart';
-import 'Authintication/UI/login.dart';
-import 'Authintication/UI/register.dart';
-import 'Authintication/UI/resetPassword.dart';
-import 'Provider/AuthProvider.dart';
-import 'Authintication/Helper/sqHelper.dart';
-import 'Ui/HomePage.dart';
+import '../Authintication/UI/login.dart';
+import '../Authintication/UI/register.dart';
+import '../Authintication/UI/resetPassword.dart';
+import '../Provider/AuthProvider.dart';
+import '../Authintication/Helper/sqHelper.dart';
+import '../Ui/HomePage.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.x.intiateDatabase();
   runApp(
@@ -38,6 +39,7 @@ void main() async{
           Login.routeName: (context) => Login(),
           Register.routeName: (context) => Register(),
           ResetPassword.routeName: (context) => ResetPassword(),
+          UpdateProgile.routeName: (context) => UpdateProgile(),
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

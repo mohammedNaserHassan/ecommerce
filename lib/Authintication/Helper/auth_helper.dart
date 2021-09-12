@@ -11,7 +11,7 @@ class Auth_helper {
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-    //  print(userCredential.user.uid);
+      //  print(userCredential.user.uid);
       return userCredential;
 
 //same the id but large digits and has a expire time and it is more secure
@@ -29,12 +29,11 @@ class Auth_helper {
     }
   }
 
-  Future<UserCredential> signin(String email,String password) async {
+  Future<UserCredential> signin(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       vereifyEmail();
-
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'user-not-found') {
@@ -71,28 +70,27 @@ class Auth_helper {
   Future<User> getCurrentUser() async {
     try {
       var currentuser = firebaseAuth.currentUser;
-      if (currentuser != null){
-
+      if (currentuser != null) {
         print(currentuser);
-        return firebaseAuth.currentUser;}
+        return firebaseAuth.currentUser;
+      }
     } on Exception catch (e) {
       // TODO
     }
   }
 
-
-  String getUserId(){
-   try {
-     return  firebaseAuth.currentUser.uid;
-   } on Exception catch (e) {
-     // TODO
-   }
-  }
-  bool checkUser(){
-    if(firebaseAuth.currentUser==null){
-      return false;
+  String getUserId() {
+    try {
+      return firebaseAuth.currentUser.uid;
+    } on Exception catch (e) {
+      // TODO
     }
-    else{
+  }
+
+  bool checkUser() {
+    if (firebaseAuth.currentUser == null) {
+      return false;
+    } else {
       return true;
     }
   }

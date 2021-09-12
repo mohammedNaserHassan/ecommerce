@@ -21,7 +21,8 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   @override
   void initState() {
-   Provider.of<AuthProvider>(context,listen: false).getCountriesFromFirestore();
+    Provider.of<AuthProvider>(context, listen: false)
+        .getCountriesFromFirestore();
     super.initState();
   }
 
@@ -132,8 +133,11 @@ class _RegisterState extends State<Register> {
                                       child: provider.file == null
                                           ? CircleAvatar(
                                               backgroundColor: Colors.blue,
-                                      child: Icon(Icons.add_a_photo_outlined,size: 35,),
-                                      )
+                                              child: Icon(
+                                                Icons.add_a_photo_outlined,
+                                                size: 35,
+                                              ),
+                                            )
                                           : Image.file(provider.file,
                                               fit: BoxFit.cover),
                                     ),
@@ -188,7 +192,9 @@ class _RegisterState extends State<Register> {
                                           ),
                                         ),
                                   provider.countries == null
-                                      ? Container(child: Text('list is null'),)
+                                      ? Container(
+                                          child: Text('list is null'),
+                                        )
                                       : Container(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 10),
@@ -234,14 +240,17 @@ class _RegisterState extends State<Register> {
                                   label: 'Sign Up',
                                   function: provider.register,
                                 ))),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Have an account?"),
                             GestureDetector(
-                              onTap: (){
-                                AppRouter.appRouter.gotoPagewithReplacment(Login.routeName);
+                              onTap: () {
+                                AppRouter.appRouter
+                                    .gotoPagewithReplacment(Login.routeName);
                               },
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 5),

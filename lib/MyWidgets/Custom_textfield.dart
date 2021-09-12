@@ -8,15 +8,16 @@ class Custom_textfield extends StatelessWidget {
 
   Custom_textfield(
       {this.label,
-        this.textEditingController,
-        this.type = TextInputType.name,
-        this.obscure = false});
+      this.textEditingController,
+      this.type = TextInputType.name,
+      this.obscure = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
       child: TextField(
+        style: TextStyle(color: Colors.red),
         obscureText: obscure,
         keyboardType: type,
         controller: textEditingController,

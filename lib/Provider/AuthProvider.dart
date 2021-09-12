@@ -3,22 +3,23 @@ import 'dart:io';
 import 'package:ecommerce/Authintication/Helper/auth_helper.dart';
 import 'package:ecommerce/Authintication/Helper/fireStorageHelper.dart';
 import 'package:ecommerce/Authintication/Helper/fireStore_Helper.dart';
+import 'package:ecommerce/Authintication/Helper/sqHelper.dart';
 import 'package:ecommerce/Authintication/UI/login.dart';
 import 'package:ecommerce/Models/CountryModel.dart';
 import 'package:ecommerce/Models/RegisterRequest.dart';
+import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Services/customDialog.dart';
 import 'package:ecommerce/Ui/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-class AuthProvider extends ChangeNotifier{
-  AuthProvider(){
+class AuthProvider extends ChangeNotifier {
+  AuthProvider() {
     getCountriesFromFirestore();
-
   }
-
 
   /////Sign up//////////////////////////////
   register() async {
@@ -28,13 +29,14 @@ class AuthProvider extends ChangeNotifier{
 
       String imageUrl = await fireStorageHelper.helper.uploadImage(file);
       RegisterRequest registerRequest = RegisterRequest(
-          imgurl: imageUrl,
-          id: userCredential.user.uid,
-          city: selectedCity??'',
-          country: selectedCountry.name??'',
-          Email: emailController.text,
-          fName: fNameController.text,
-          lName: lNameController.text,);
+        imgurl: imageUrl,
+        id: userCredential.user.uid,
+        city: selectedCity ?? '',
+        country: selectedCountry.name ?? '',
+        Email: emailController.text,
+        fName: fNameController.text,
+        lName: lNameController.text,
+      );
       await fireStore_Helper.helper.addUserToFireBase(registerRequest);
       print('Enter account');
       await Auth_helper.auth_helper.vereifyEmail();
@@ -58,6 +60,7 @@ class AuthProvider extends ChangeNotifier{
     // print(user.toMap());
     notifyListeners();
   }
+
   ///////////////
 
   //////Login////////////////////////////////////
@@ -96,8 +99,8 @@ class AuthProvider extends ChangeNotifier{
     clearController();
     AppRouter.appRouter.gotoPagewithReplacment(Login.routeName);
   }
-/////////////
 
+/////////////
 
   //////Controller//////
   TextEditingController emailController = TextEditingController();
@@ -115,11 +118,10 @@ class AuthProvider extends ChangeNotifier{
     countryController.clear();
     cityController.clear();
   }
-
-////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////
 //////Check User Found///////
   String myId;
+
   checkLogin() {
     bool isLoggin = Auth_helper.auth_helper.checkUser();
     if (isLoggin) {
@@ -131,20 +133,53 @@ class AuthProvider extends ChangeNotifier{
   }
 
   ///////////////////////
+  fillControllers() {
+    emailController.text = user.Email;
+    fNameController.text = user.fName;
+    lNameController.text = user.lName;
+    countryController.text = user.country;
+    cityController.text = user.city;
+  }
+  File updatedFile;
 
+  captureUpdateProfileImage() async {
+    XFile file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    this.updatedFile = File(file.path);
+    notifyListeners();
+  }
+  updateProfile() async {
+    String imageUrl;
+    if (updatedFile != null) {
+      imageUrl = await fireStorageHelper.helper.uploadImage(updatedFile);
+    }
+    RegisterRequest userModel = RegisterRequest(
+        Email: emailController.text,
+        city: cityController.text,
+        country: countryController.text,
+        fName: fNameController.text,
+        lName: lNameController.text,
+        id: user.id,
+        imgurl: imageUrl??user.imgurl);
+
+    await fireStore_Helper.helper.updateProfile(userModel);
+    getUserFromFirestore();
+    AppRouter.appRouter.back();
+  }
 //upload Image
 
   File file;
+
   selectFile() async {
     XFile imageFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     this.file = File(imageFile.path);
     notifyListeners();
   }
+
   ///////////
 
   //////Country and City  Firebase////////////
-  List<CountryModel> countries=[];
+  List<CountryModel> countries = [];
   List<dynamic> cities = [];
   CountryModel selectedCountry;
   String selectedCity;
@@ -161,14 +196,13 @@ class AuthProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-
   getCountriesFromFirestore() async {
     try {
       // myId =Auth_helper.auth_helper.getUserId();
-      this.countries=
-      await fireStore_Helper.helper.getAllCountreis();
-      if(countries!=null){
-      selectCountry(countries.first);}
+      this.countries = await fireStore_Helper.helper.getAllCountreis();
+      if (countries != null) {
+        selectCountry(countries.first);
+      }
       notifyListeners();
     } on Exception catch (e) {
       // TODO
@@ -176,9 +210,9 @@ class AuthProvider extends ChangeNotifier{
   }
 
 //////////////////Sign out////////////////////////////////////
-logOut() async {
-  await Auth_helper.auth_helper.signOut();
-  AppRouter.appRouter.gotoPagewithReplacment(Login.routeName);
-}
+  logOut() async {
+    await Auth_helper.auth_helper.signOut();
+    AppRouter.appRouter.gotoPagewithReplacment(Login.routeName);
+  }
 }
 /////////////////////

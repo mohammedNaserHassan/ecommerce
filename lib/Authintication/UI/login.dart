@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:ecommerce/Animation/FadeAnimation.dart';
 import 'package:ecommerce/Authintication/UI/register.dart';
 import 'package:ecommerce/Authintication/UI/resetPassword.dart';
 import 'package:ecommerce/MyWidgets/CustomButton.dart';
 import 'package:ecommerce/MyWidgets/Custom_textfield.dart';
 import 'package:ecommerce/Provider/AuthProvider.dart';
+import 'package:ecommerce/Provider/MyProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,159 +25,81 @@ class _RegisterState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            child: Consumer<AuthProvider>(
-              builder: (context, provider, c) => Column(
-                children: <Widget>[
-                  Container(
-                    height: 400,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('Assets/Images/background.png'),
-                            fit: BoxFit.fill)),
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          left: 30,
-                          width: 80,
-                          height: 200,
-                          child: FadeAnimation(
-                              1,
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'Assets/Images/light-1.png'))),
-                              )),
-                        ),
-                        Positioned(
-                          left: 140,
-                          width: 80,
-                          height: 150,
-                          child: FadeAnimation(
-                              1.3,
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'Assets/Images/light-2.png'))),
-                              )),
-                        ),
-                        Positioned(
-                          right: 40,
-                          top: 40,
-                          width: 80,
-                          height: 150,
-                          child: FadeAnimation(
-                              1.5,
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'Assets/Images/clock.png'))),
-                              )),
-                        ),
-                        Positioned(
-                          child: FadeAnimation(
-                              1.6,
-                              Container(
-                                margin: EdgeInsets.only(top: 50),
-                                child: Center(
-                                  child: Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )),
-                        )
-                      ],
-                    ),
+      body: Consumer<AuthProvider>(
+        builder: (context,provider,c)=>Stack(
+          children: [
+            Positioned(
+              child: Container(
+                decoration: BoxDecoration(
+
+                  image: DecorationImage(
+                    image: AssetImage("Assets/Images/profile.jpeg"),
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(30.0),
-                    child: Column(
-                      children: <Widget>[
-                        FadeAnimation(
-                            1.8,
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color:
-                                            Color.fromRGBO(143, 148, 251, .2),
-                                        blurRadius: 20.0,
-                                        offset: Offset(0, 10))
-                                  ]),
-                              child: Column(
-                                children: <Widget>[
-                                  Custom_textfield(
-                                    label: 'Email',
-                                    textEditingController:
-                                        provider.emailController,
-                                  ),
-                                  Custom_textfield(
-                                    label: 'Password',
-                                    textEditingController:
-                                        provider.passwordController,
-                                    obscure: true,
-                                  ),
-                                ],
-                              ),
-                            )),
-                        SizedBox(
-                          height: 30,
+                ),
+                child: null /* add child content here */,
+              ),
+            ),
+            Positioned(
+                top: 50,
+                child: IconButton(
+                  onPressed: () {
+                    exit(0);
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+                )),
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 150,
+                      ),
+                      text(40, 'Welcome Back!'),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      text(28, 'Sign in to your account'),
+                      SizedBox(
+                        height: 80,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                        decoration: BoxDecoration(color: Colors.black54),
+                        child: Custom_textfield(
+                          label: 'Email',
+                          textEditingController:
+                          provider.emailController,
                         ),
-                        FadeAnimation(
-                            2,
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  gradient: LinearGradient(colors: [
-                                    Color.fromRGBO(143, 148, 251, 1),
-                                    Color.fromRGBO(143, 148, 251, .6),
-                                  ])),
-                              child: CustomButton(
-                                label: 'Login',
-                                function: provider.login,
-                              ),
-                            )),
-                        SizedBox(
-                          height: 50,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                        decoration: BoxDecoration(color: Colors.black54),
+                        child: Custom_textfield(
+                          label: 'Password',
+                          textEditingController:
+                          provider.passwordController,
+                          obscure: true,
                         ),
-                       FadeAnimation(
-                                1.5,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Don\’t have an account?"),
-                                    GestureDetector(
-                                      onTap: (){
-                                        AppRouter.appRouter.gotoPagewithReplacment(Register.routeName);
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 5),
-                                        child: Text(
-                                         'Sign up',
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(143, 148, 251, 1)),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                        GestureDetector(
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child:  GestureDetector(
                             onTap: () {
-                              AppRouter.appRouter
-                                  .gotoPagewithReplacment(ResetPassword.routeName);
+                              AppRouter.appRouter.gotoPagewithReplacment(
+                                  ResetPassword.routeName);
                             },
                             child: FadeAnimation(
                                 1.5,
@@ -183,16 +108,61 @@ class _RegisterState extends State<Login> {
                                   child: Text(
                                     "Forgot Password?",
                                     style: TextStyle(
-                                        color: Color.fromRGBO(143, 148, 251, 1)),
+                                        fontSize: 15,
+                                        color:
+                                        Colors.white,
+                                        fontWeight: FontWeight.w100
+                                    ),
                                   ),
                                 ))),
-                      ],
-                    ),
-                  )
-                ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      MaterialButton(
+                        elevation: 0,
+                        minWidth: double.maxFinite,
+                        color: Colors.red[700],
+                        onPressed: () {
+                          provider.login();
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: text(20, 'LOGIN')),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            text(18, 'Don\'t have an account?'),
+                            TextButton(
+                                onPressed: () {
+                                  AppRouter.appRouter.gotoPagewithReplacment(
+                                      Register.routeName);
+                                },
+                                child: text(18, 'Sign Up'))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ));
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget text(double size, String text) {
+    return Text(
+      text,
+      style: TextStyle(color: Colors.white, fontSize: size),
+    );
   }
 }

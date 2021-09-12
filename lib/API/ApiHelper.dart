@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 
-class ApiHelper{
+class ApiHelper {
   ApiHelper._();
+
   static ApiHelper apiHelper = ApiHelper._();
 
-  Dio dio=Dio();
+  Dio dio = Dio();
 
   ////////////////////////////////////////////////////
   Future<List<dynamic>> getAllCategories() async {
@@ -13,6 +14,7 @@ class ApiHelper{
     List<dynamic> categories = response.data;
     return categories;
   }
+
 ////////////////////////////////////////////////////
 
   Future<List<dynamic>> getCategoryProducts(String categoryName) async {
@@ -21,6 +23,7 @@ class ApiHelper{
     List<dynamic> products = response.data;
     return products;
   }
+
   ////////////////////////////////////////////////////
 
   Future<List<dynamic>> getAllProducts() async {
@@ -29,6 +32,7 @@ class ApiHelper{
     List<dynamic> products = response.data;
     return products;
   }
+
 ////////////////////////////////////////////////////
 
   Future<dynamic> getSpecificProduct(int id) async {

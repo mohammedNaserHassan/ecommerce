@@ -24,7 +24,7 @@ class _FavouriteTapState extends State<FavouriteTap> {
           ? Center(
               child: Text(
                 'No Favourite yet',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.grey),
               ),
             )
           : Column(
@@ -39,7 +39,7 @@ class _FavouriteTapState extends State<FavouriteTap> {
                               provider.favouriteProducts[index]);
                         },
                         title: provider.favouriteProducts[index].title
-                            .substring(0, 25),
+                            .substring(0, 18),
                         imgurl: provider.favouriteProducts[index].image,
                         price:
                             provider.favouriteProducts[index].price.toString(),

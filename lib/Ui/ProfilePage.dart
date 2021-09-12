@@ -1,6 +1,7 @@
 import 'package:ecommerce/Provider/AuthProvider.dart';
 import 'package:ecommerce/Services/Router.dart';
 import 'package:ecommerce/Ui/HomePage.dart';
+import 'package:ecommerce/Ui/UpdateProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -13,11 +14,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   Widget textfield({@required hintText}) {
-    return Material(
+    return Card(
       elevation: 4,
-      shadowColor: Colors.cyan,
+      shadowColor: Colors.grey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -40,11 +40,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Consumer<AuthProvider>(
-      builder:(context,provider,c)=> Scaffold(
+    return Consumer<AuthProvider>(
+      builder: (context, provider, c) => Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.cyan,
+          backgroundColor: Colors.grey,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
@@ -59,55 +59,56 @@ class _ProfilePageState extends State<ProfilePage> {
           alignment: Alignment.center,
           children: [
             Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    height: 450,
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        textfield(
-                          hintText: provider.user.fName+'\t'+provider.user.lName,
-                        ),
-                        textfield(
-                          hintText: provider.user.Email,
-                        ),
-                        textfield(
-                          hintText: provider.user.country,
-                        ),
-                        textfield(
-                          hintText: provider.user.city,
-                        ),
-                        TextButton(
-                          onPressed: (){
-                            Toast.show('Successfully updated', context, duration: Toast.LENGTH_LONG,
-                                gravity: Toast.LENGTH_SHORT);
-                          },
-                          child: Container(
-                            height: 55,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.cyan.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(15)
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Update',
-                                style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.white,
-                                ),
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 450,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      textfield(
+                        hintText:
+                            provider.user.fName + '\t' + provider.user.lName,
+                      ),
+                      textfield(
+                        hintText: provider.user.Email,
+                      ),
+                      textfield(
+                        hintText: provider.user.country,
+                      ),
+                      textfield(
+                        hintText: provider.user.city,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Toast.show('Successfully updated', context,
+                              duration: Toast.LENGTH_LONG,
+                              gravity: Toast.LENGTH_SHORT);
+                        },
+                        child: Container(
+                          height: 55,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.black54,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Center(
+                            child: Text(
+                              'Check Update',
+                              style: TextStyle(
+                                fontSize: 23,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
             CustomPaint(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -139,9 +140,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     shape: BoxShape.circle,
                     color: Colors.white,
                     image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(provider.user.imgurl)
-                    ),
+                        fit: BoxFit.cover,
+                        image: NetworkImage(provider.user.imgurl)),
                   ),
                 ),
               ],
@@ -149,13 +149,17 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.only(bottom: 270, left: 184),
               child: CircleAvatar(
-                backgroundColor: Colors.cyan,
+                backgroundColor: Colors.grey,
                 child: IconButton(
                   icon: Icon(
                     Icons.edit,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .fillControllers();
+                    AppRouter.appRouter.gotoPage(UpdateProgile.routeName);
+                  },
                 ),
               ),
             )
@@ -167,14 +171,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    Provider.of<AuthProvider>(context,listen: false).getUserFromFirestore();
+    Provider.of<AuthProvider>(context, listen: false).getUserFromFirestore();
   }
 }
 
 class HeaderCurvedContainer extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Colors.cyan;
+    Paint paint = Paint()..color = Colors.grey;
     Path path = Path()
       ..relativeLineTo(0, 150)
       ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
@@ -184,5 +188,5 @@ class HeaderCurvedContainer extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
